@@ -7,7 +7,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Product = require('../lib/models/Product');
 
-describe('pos-bar-backend routes', () => {
+describe('product routes', () => {
     beforeAll(async() => {
         const uri = await mongod.getUri();
         return connect(uri);
