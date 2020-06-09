@@ -53,10 +53,10 @@ describe('pos-bar-backend routes', () => {
             purchasePricePerBottle: 14.99,
             size: 750,
         })
-            .then(() => request(app.get('api/v1/products')))
+            .then(() => request(app).get('/api/v1/products'))
             .then(res => {
                 expect(res.body).toEqual([{
-                    id: expect.anything(),
+                    _id: expect.anything(),
                     name: 'Captain Morgan Spiced Rum'
                 }]);
             });
