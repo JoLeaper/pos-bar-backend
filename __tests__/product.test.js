@@ -24,7 +24,7 @@ describe('pos-bar-backend routes', () => {
 
     it('creates a new product via post', () => {
         return request(app)
-            .post('/')
+            .post('/api/v1/products')
             .send({
                 name: 'Captain Morgan Spiced Rum',
                 description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
