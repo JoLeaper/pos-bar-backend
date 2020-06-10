@@ -90,21 +90,18 @@ describe('product routes', () => {
     return request(app)
       .get('/api/v1/bottles')
       .then(res => {
-        expect(res.body).toEqual({
+        expect(res.body).toEqual([{
           _id: expect.anything(),
           product: captainMorgan._id.toString(),
-          __v: 0
         },
         {
           _id: expect.anything(),
           product: captainMorgan._id.toString(),
-          __v: 0
         },
         {
           _id: expect.anything(),
           product: jackDaniels._id.toString(),
-          __v: 0
-        });
+        }]);
       });
   });
   //         .then(() => request(app).get('/api/v1/products'))
