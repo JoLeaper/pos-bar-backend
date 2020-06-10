@@ -24,14 +24,13 @@ describe('product routes', () => {
     });
 
     it('creates a new bottle via post', async() => {
-        const captainMorgan = await new Product.create({
-                name: 'Captain Morgan Spiced Rum',
-                description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
-                salePricePerMl: 0.02,
-                purchasePricePerBottle: 14.99,
-                size: 750
-            })
-        })
+        const captainMorgan = await Product.create({
+            name: 'Captain Morgan Spiced Rum',
+            description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+            salePricePerMl: 0.02,
+            purchasePricePerBottle: 14.99,
+            size: 750
+        });
         return request(app)
             .post('/api/v1/bottles')
             .send({
@@ -43,15 +42,14 @@ describe('product routes', () => {
             .then(res => {
                 expect(res.body).toEqual({
                     _id: expect.anything(),
-                    product: product._id.toString(),
-                    remainingLiquid: product.size,
-                    purchaseDate: expect.any(Date),
-                    lastPourDate: expect.any(Date),
+                    product: captainMorgan._id.toString(),
+                    remainingLiquid: captainMorgan.size,
+                    purchaseDate: expect.any(String),
+                    lastPourDate: expect.any(String),
                     __v: 0
                 });
             });
     });
-
     // it('gets all the products we offer (id and name only)', () => {
     //     return Product.create({
     //         name: 'Captain Morgan Spiced Rum',
