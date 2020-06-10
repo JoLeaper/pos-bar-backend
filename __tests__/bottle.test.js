@@ -104,6 +104,38 @@ describe('product routes', () => {
         }]);
       });
   });
+
+  it('gets the details of a bottle by populating product information', async() => {
+    const captainMorgan = await Product.create({
+      name: 'Captain Morgan Spiced Rum',
+      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+      salePricePerMl: 0.02,
+      purchasePricePerBottle: 14.99,
+      size: 750
+    });
+
+    await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: captainMorgan.size,
+      purchaseDate: new Date(),
+      lastPourDate: new Date()
+    },
+    );
+    return request(app)
+      .get('/api/v1/bottles')
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          product: {
+            name: 'Captain Morgan Spiced Rum',
+            description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+            salePricePerMl: 0.02,
+            purchasePricePerBottle: 14.99,
+            size: 750
+          }
+        });
+      });
+  });
   //         .then(() => request(app).get('/api/v1/products'))
   //         .then(res => {
   //             expect(res.body).toEqual([{
