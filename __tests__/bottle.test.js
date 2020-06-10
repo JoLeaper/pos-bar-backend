@@ -6,7 +6,7 @@ const connect = require('../lib/utils/connect');
 const request = require('supertest');
 const app = require('../lib/app');
 const Product = require('../lib/models/Product');
-const Bottle = require('../lib/models/Bottle');
+// const Bottle = require('../lib/models/Bottle');
 
 describe('product routes', () => {
     beforeAll(async() => {
