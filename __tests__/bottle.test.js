@@ -68,20 +68,14 @@ describe('product routes', () => {
     await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: captainMorgan.size,
-      purchaseDate: new Date(),
-      lastPourDate: new Date()
     },
     {
       product: captainMorgan._id,
       remainingLiquid: captainMorgan.size,
-      purchaseDate: new Date(),
-      lastPourDate: new Date()
     },
     {
       product: jackDaniels._id,
       remainingLiquid: jackDaniels.size,
-      purchaseDate: new Date(),
-      lastPourDate: new Date()
     },
     );
     return request(app)
