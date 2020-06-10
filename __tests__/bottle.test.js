@@ -159,16 +159,14 @@ describe('product routes', () => {
       lastPourDate: new Date()
     },
     );
+
     return request(app)
-      .patch(`/api/v1/bottles/${bottle1._id}`, {
-        remainingLiquid: 200
-      })
+      .patch(`/api/v1/bottles/${bottle1._id}`)
+      .send({ remainingLiquid: 200 })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
-          product: {
-            _id: captainMorgan._id.toString(),
-          },
+          product: captainMorgan._id.toString(),
           remainingLiquid: 200,
           purchaseDate: expect.any(String),
           lastPourDate: expect.any(String),
