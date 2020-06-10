@@ -6,7 +6,7 @@ const connect = require('../lib/utils/connect');
 const request = require('supertest');
 const app = require('../lib/app');
 const Product = require('../lib/models/Product');
-// const Bottle = require('../lib/models/Bottle');
+const Bottle = require('../lib/models/Bottle');
 
 describe('product routes', () => {
   beforeAll(async() => {
@@ -50,14 +50,63 @@ describe('product routes', () => {
         });
       });
   });
-  // it('gets all the products we offer (id and name only)', () => {
-  //     return Product.create({
-  //         name: 'Captain Morgan Spiced Rum',
-  //         description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
-  //         salePricePerMl: 0.02,
-  //         purchasePricePerBottle: 14.99,
-  //         size: 750,
-  //     })
+
+  it('gets all the available bottles', async() => {
+    const captainMorgan = await Product.create({
+      name: 'Captain Morgan Spiced Rum',
+      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+      salePricePerMl: 0.02,
+      purchasePricePerBottle: 14.99,
+      size: 750
+    });
+
+    const jackDaniels = await Product.create({
+      name: 'Jack Daniels',
+      description: 'idk anything about alcohol',
+      salePricePerMl: 0.02,
+      purchasePricePerBottle: 19.99,
+      size: 1000
+    });
+
+    await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: captainMorgan.size,
+      purchaseDate: new Date(),
+      lastPourDate: new Date()
+    },
+    {
+      product: captainMorgan._id,
+      remainingLiquid: captainMorgan.size,
+      purchaseDate: new Date(),
+      lastPourDate: new Date()
+    },
+    {
+      product: jackDaniels._id,
+      remainingLiquid: jackDaniels.size,
+      purchaseDate: new Date(),
+      lastPourDate: new Date()
+    },
+    );
+    return request(app)
+      .get('/api/v1/bottles')
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          product: captainMorgan._id.toString(),
+          __v: 0
+        },
+        {
+          _id: expect.anything(),
+          product: captainMorgan._id.toString(),
+          __v: 0
+        },
+        {
+          _id: expect.anything(),
+          product: jackDaniels._id.toString(),
+          __v: 0
+        });
+      });
+  });
   //         .then(() => request(app).get('/api/v1/products'))
   //         .then(res => {
   //             expect(res.body).toEqual([{
