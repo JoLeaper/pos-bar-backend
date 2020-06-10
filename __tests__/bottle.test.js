@@ -198,7 +198,7 @@ describe('product routes', () => {
         expect(res.body).toEqual({
           _id: expect.anything(),
           product: captainMorgan._id.toString(),
-          remainingLiquid: 200,
+          remainingLiquid: expect.any(Number),
           purchaseDate: expect.any(String),
           lastPourDate: expect.any(String),
           __v: 0
