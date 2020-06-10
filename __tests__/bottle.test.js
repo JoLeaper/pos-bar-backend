@@ -34,10 +34,7 @@ describe('product routes', () => {
     return request(app)
       .post('/api/v1/bottles')
       .send({
-        product: captainMorgan._id,
-        remainingLiquid: captainMorgan.size,
-        purchaseDate: new Date(),
-        lastPourDate: new Date()
+        product: captainMorgan._id
       })
       .then(res => {
         expect(res.body).toEqual({
