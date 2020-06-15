@@ -142,28 +142,32 @@ describe('order routes', () => {
       size: 750
     });
 
-    await request(app)
-      .post('/api/v1/orders')
-      .send([{
+    Order.create({
+      invoice: [{
         product: captainMorgan._id,
         amount: 1000
-      },
-      {
+      }],
+      totalSalePrice: 1000
+    },
+    {
+      invoice: [{
         product: captainMorgan._id,
         amount: 1000
-      }],)
-      .then(res => res.body);
+      }],
+      totalSalePrice: 1000
+    }
+    );
 
     return request(app)
       .get('/api/v1/orders/')
       .then(res => {
         expect(res.body).toEqual([{
           _id: expect.any(String),
-          createdAt: expect.any(String),
+          orderDate: expect.any(String),
         },
         {
           _id: expect.any(String),
-          createdAt: expect.any(String),
+          orderDate: expect.any(String),
         }]);
       });
   });
