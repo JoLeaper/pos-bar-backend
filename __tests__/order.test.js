@@ -30,6 +30,12 @@ describe('order routes', () => {
       purchasePricePerBottle: 14.99,
       size: 750
     });
+
+    await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: 300
+    });
+
     return request(app)
       .post('/api/v1/orders')
       .send([{
@@ -62,7 +68,7 @@ describe('order routes', () => {
     });
     const bottle1 = await Bottle.create({
       product: captainMorgan._id,
-      remainingLiquid: 300
+      remainingLiquid: 400
     });
     const bottle2 = await Bottle.create({
       product: captainMorgan._id,
@@ -91,10 +97,41 @@ describe('order routes', () => {
             size: 750,
             __v: 0
           },
-          remainingLiquid: 50,
+          remainingLiquid: 150,
           purchaseDate: expect.any(String),
           lastPourDate: expect.any(String),
           __v: 0
+        });
+      });
+  });
+
+  it('throws error if not enough alcohol', async() => {
+    const captainMorgan = await Product.create({
+      name: 'Captain Morgan Spiced Rum',
+      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+      salePricePerMl: 0.02,
+      purchasePricePerBottle: 14.99,
+      size: 750
+    });
+    const bottle1 = await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: 100
+    });
+    const bottle2 = await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: captainMorgan.size
+    });
+
+    return request(app)
+      .post('/api/v1/orders')
+      .send([{
+        product: captainMorgan._id,
+        amount: 1000
+      }])
+      .then(res => {
+        expect(res.body).toEqual({
+          message: 'not enough supply',
+          status: 400,
         });
       });
   });
@@ -133,6 +170,7 @@ describe('order routes', () => {
         }]);
       });
   });
+  
   it('gets all the orders', async() => {
     const captainMorgan = await Product.create({
       name: 'Captain Morgan Spiced Rum',
