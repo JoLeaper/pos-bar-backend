@@ -66,7 +66,8 @@ describe('order routes', () => {
       purchasePricePerBottle: 14.99,
       size: 750
     });
-    const bottle1 = await Bottle.create({
+
+    await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: 400
     });
@@ -113,11 +114,11 @@ describe('order routes', () => {
       purchasePricePerBottle: 14.99,
       size: 750
     });
-    const bottle1 = await Bottle.create({
+    await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: 100
     });
-    const bottle2 = await Bottle.create({
+    await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: captainMorgan.size
     });
@@ -170,7 +171,7 @@ describe('order routes', () => {
         }]);
       });
   });
-  
+
   it('gets all the orders', async() => {
     const captainMorgan = await Product.create({
       name: 'Captain Morgan Spiced Rum',
