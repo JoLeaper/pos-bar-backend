@@ -106,36 +106,36 @@ describe('order routes', () => {
       });
   });
 
-  it('throws error if not enough alcohol', async() => {
-    const captainMorgan = await Product.create({
-      name: 'Captain Morgan Spiced Rum',
-      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
-      salePricePerMl: 0.02,
-      purchasePricePerBottle: 14.99,
-      size: 750
-    });
-    await Bottle.create({
-      product: captainMorgan._id,
-      remainingLiquid: 100
-    });
-    await Bottle.create({
-      product: captainMorgan._id,
-      remainingLiquid: captainMorgan.size
-    });
+  // it('throws error if not enough alcohol', async() => {
+  //   const captainMorgan = await Product.create({
+  //     name: 'Captain Morgan Spiced Rum',
+  //     description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+  //     salePricePerMl: 0.02,
+  //     purchasePricePerBottle: 14.99,
+  //     size: 750
+  //   });
+  //   await Bottle.create({
+  //     product: captainMorgan._id,
+  //     remainingLiquid: 100
+  //   });
+  //   await Bottle.create({
+  //     product: captainMorgan._id,
+  //     remainingLiquid: captainMorgan.size
+  //   });
 
-    return request(app)
-      .post('/api/v1/orders')
-      .send([{
-        product: captainMorgan._id,
-        amount: 1000
-      }])
-      .then(res => {
-        expect(res.body).toEqual({
-          message: 'not enough supply',
-          status: 400,
-        });
-      });
-  });
+  //   return request(app)
+  //     .post('/api/v1/orders')
+  //     .send([{
+  //       product: captainMorgan._id,
+  //       amount: 1000
+  //     }])
+  //     .then(res => {
+  //       expect(res.body).toEqual({
+  //         message: 'not enough supply',
+  //         status: 400,
+  //       });
+  //     });
+  // });
 
   it('verifies that the bottles are deleted', async() => {
     const captainMorgan = await Product.create({
