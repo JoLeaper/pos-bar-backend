@@ -1,5 +1,4 @@
 const chance = require('chance').Chance();
-
 const Product = require('../lib/models/Product');
 const Bottle = require('../lib/models/Bottle');
 const Order = require('../lib/models/Order');
