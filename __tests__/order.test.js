@@ -7,7 +7,6 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Product = require('../lib/models/Product');
 const Bottle = require('../lib/models/Bottle');
-const Order = require('../lib/models/Order');
 
 describe('order routes', () => {
   beforeAll(async() => {
@@ -106,72 +105,6 @@ describe('order routes', () => {
       });
   });
 
-  // it('throws error if not enough alcohol', async() => {
-  //   const captainMorgan = await Product.create({
-  //     name: 'Captain Morgan Spiced Rum',
-  //     description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
-  //     salePricePerMl: 0.02,
-  //     purchasePricePerBottle: 14.99,
-  //     size: 750
-  //   });
-  //   await Bottle.create({
-  //     product: captainMorgan._id,
-  //     remainingLiquid: 100
-  //   });
-  //   await Bottle.create({
-  //     product: captainMorgan._id,
-  //     remainingLiquid: captainMorgan.size
-  //   });
-
-  //   return request(app)
-  //     .post('/api/v1/orders')
-  //     .send([{
-  //       product: captainMorgan._id,
-  //       amount: 1000
-  //     }])
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         message: 'not enough supply',
-  //         status: 400,
-  //       });
-  //     });
-  // });
-
-  it('verifies that the bottles are deleted', async() => {
-    const captainMorgan = await Product.create({
-      name: 'Captain Morgan Spiced Rum',
-      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
-      salePricePerMl: 0.02,
-      purchasePricePerBottle: 14.99,
-      size: 750
-    });
-    const bottle1 = await Bottle.create({
-      product: captainMorgan._id,
-      remainingLiquid: 300
-    });
-    const bottle2 = await Bottle.create({
-      product: captainMorgan._id,
-      remainingLiquid: captainMorgan.size
-    });
-
-    await request(app)
-      .post('/api/v1/orders')
-      .send([{
-        product: captainMorgan._id,
-        amount: 1000
-      }])
-      .then(res => res.body);
-
-    return request(app)
-      .get('/api/v1/bottles/')
-      .then(res => {
-        expect(res.body).toEqual([{
-          _id: bottle2._id.toString(),
-          product: captainMorgan._id.toString(),
-        }]);
-      });
-  });
-
   it('gets all the orders', async() => {
     const captainMorgan = await Product.create({
       name: 'Captain Morgan Spiced Rum',
@@ -208,6 +141,72 @@ describe('order routes', () => {
           _id: expect.any(String),
           orderDate: expect.any(String),
         }]);
+      });
+  });
+
+  it('verifies that the bottles are deleted', async() => {
+    const captainMorgan = await Product.create({
+      name: 'Captain Morgan Spiced Rum',
+      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+      salePricePerMl: 0.02,
+      purchasePricePerBottle: 14.99,
+      size: 750
+    });
+    const bottle1 = await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: 300
+    });
+    const bottle2 = await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: captainMorgan.size
+    });
+
+    await request(app)
+      .post('/api/v1/orders')
+      .send([{
+        product: captainMorgan._id,
+        amount: 1000
+      }])
+      .then(res => res.body);
+
+    return request(app)
+      .get('/api/v1/bottles/')
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: bottle2._id.toString(),
+          product: captainMorgan._id.toString(),
+        }]);
+      });
+  });
+
+  it('throws error if not enough alcohol', async() => {
+    const captainMorgan = await Product.create({
+      name: 'Captain Morgan Spiced Rum',
+      description: 'US Virgin Islands- Mixes aromas of marshmallow, light toffee and light spiced honey, leading into a molasses-centric flavor. Ideal for spicing up tropical cocktails or mixed with cola.',
+      salePricePerMl: 0.02,
+      purchasePricePerBottle: 14.99,
+      size: 750
+    });
+    const bottle1 = await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: 100
+    });
+    const bottle2 = await Bottle.create({
+      product: captainMorgan._id,
+      remainingLiquid: captainMorgan.size
+    });
+
+    return request(app)
+      .post('/api/v1/orders')
+      .send([{
+        product: captainMorgan._id,
+        amount: 1000
+      }])
+      .then(res => {
+        expect(res.body).toEqual({
+          message: 'not enough supply',
+          status: 400,
+        });
       });
   });
 
