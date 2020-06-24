@@ -8,9 +8,9 @@ module.exports = async({ products = 10, bottles = 50, orders = 20  } = {}) => {
     return Product.create({
       name: chance.profession() + ' ' + chance.last() + ' Drink',  
       description: chance.paragraph({ sentences: 1 }),
-      salePricePerMl: chance.floating({ fixed: 2 }),
-      purchasePricePerBottle: chance.floating({ fixed: 2 }),
-      size: chance.natural({ min: 1 })
+      salePricePerMl: chance.floating({  min: 1, max: 100, fixed: 2 }),
+      purchasePricePerBottle: chance.floating({  min: 1, max: 100, fixed: 2 }),
+      size: chance.natural({ min: 1, max: 100 })
     });
   }));
 
@@ -33,7 +33,7 @@ module.exports = async({ products = 10, bottles = 50, orders = 20  } = {}) => {
           amount: chance.natural({ min: 1, max: 1000 })
         };
       }),
-      totalSalePrice: chance.floating({ fixed: 2 }),
+      totalSalePrice: chance.floating({ min: 1, max: 100, fixed: 2 }),
     });
   }));
 };
