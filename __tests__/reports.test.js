@@ -5,38 +5,47 @@ const app = require('../lib/app');
 
 describe('aggregation routes', () => {
   it('finds the most ordered product', () => {
-    return collection().aggregate(mostProducts)
-      .toArray()
-      .then(([{ product, numOrders }]) => {
-        expect(product).toEqual(expect.any());
-        expect(numOrders).toEqual(expect.any(Number));
+    return request(app).
+      get('/api/v1/orders/mostProducts')
+      .then(res => {
+        expect(res.body).toEqual({
+          product: expect.any(),
+          numOrders: expect.anyNumber()
+        });
+        
       });
   });
   it('finds the daily sales', () => {
-    return collection().aggregate(dailySales)
-      .toArray()
-      .then(([{ day, salesAmount }]) => {
-        expect(day).toEqual(expect.any());
-        expect(salesAmount).toEqual(expect.any(Number));
+    return request(app).
+      get('/api/v1/orders/mostProducts')
+      .then(res => {
+        expect(res.body).toEqual({
+          day: expect.any(),
+          saleAmount: expect.anyNumber()
+        });
       });
   });
   it('profit per product', () => {
-    return collection().aggregate(profitPerProduct)
-      .toArray()
-      .then(([{ product, profit }]) => {
-        expect(product).toEqual(expect.any());
-        expect(profit).toEqual(expect.any(Number));
+    return request(app).
+      get('/api/v1/orders/mostProducts')
+      .then(res => {
+        expect(res.body).toEqual({
+          product: expect.any(),
+          profit: expect.any(Number)
+        });
       });
   });
+
   it('total available liquid for each product', () => {
-    return collection().aggregate(totalLiquid)
-      .toArray()
-      .then(([{ product, totalLiquid }]) => {
-        expect(product).toEqual(expect.any());
-        expect(totalLiquid).toEqual(expect.any(Number));
+    return request(app).
+      get('/api/v1/orders/mostProducts')
+      .then(res => {
+        expect(res.body).toEqual({
+          product: expect.any(),
+          totalLiquid: expect.any(Number)
+        });
       });
   });
-  
 });
 
 // the most ordered product

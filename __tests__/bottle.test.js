@@ -32,7 +32,7 @@ describe('product routes', () => {
       size: 750
     });
     return request(app)
-      .post('/api/v1/bottles')
+      .get('/api/v1/bottles')
       .send({
         product: captainMorgan._id
       })

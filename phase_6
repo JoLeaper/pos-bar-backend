@@ -4,10 +4,10 @@ This lab is broken into multiple phases.
 Phase 6 Requirements
 For phase 6 we will focus on generating reports.
 Create report routes:
-the most ordered product
-daily sales
-profit per product
-the total available liquid for each product
+the most ordered product // invoice
+daily sales // invoice
+profit per product // invoice
+the total available liquid for each product // invoice
 employee of the month (employee with the most total sales for a month)
 Testing
 supertest to test all your routes
