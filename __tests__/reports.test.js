@@ -7,7 +7,7 @@ describe('aggregation routes', () => {
     return request(app).
       get('/api/v1/orders/mostProducts')
       .then(res => {
-        expect(res.body[0]).toEqual({
+        expect(res.body).toEqual({
           _id: expect.anything(),
           numOrders: expect.any(Number)
         });
@@ -19,9 +19,10 @@ describe('aggregation routes', () => {
     return request(app).
       get('/api/v1/orders/dailySales')
       .then(res => {
-        expect(res.body).toEqual({
-          day: expect.anything(),
-          saleAmount: expect.any(Number)
+        expect(res.body).toContainEqual({
+          _id: expect.anything(),
+          salePerDay: expect.anything(),
+          orderDate: expect.any(String)
         });
       });
   });
