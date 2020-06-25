@@ -1,0 +1,15 @@
+LAB: Bar Point of Sale - Phase 6
+We are going to build the back-end for a Bar Point of Sale machine. The Bar POS back-end will need to track products, inventory bottles, and orders. When an order is made, the inventory should automatically be adjusted and our bar manager should be notified when a product we sell is running out.
+This lab is broken into multiple phases.
+Phase 6 Requirements
+For phase 6 we will focus on generating reports.
+Create report routes:
+the most ordered product // invoice
+daily sales // invoice
+profit per product // invoice
+the total available liquid for each product // invoice
+employee of the month (employee with the most total sales for a month)
+Testing
+supertest to test all your routes
+Rubric
+2 points per aggregation

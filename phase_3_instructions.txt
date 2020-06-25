@@ -1,0 +1,35 @@
+# LAB: Bar Point of Sale - Phase 3
+We are going to build the back-end for a Bar Point of Sale machine. The Bar POS back-end
+will need to track products, inventory bottles, and orders. When an order is made, the inventory
+should automatically be adjusted and our bar manager should be notified when a product we sell
+is running out.
+This lab is broken into multiple phases.
+## Phase 3 Requirements
+For phase 3 we will concentrate on the `Order` model.
+## CRUD
+You can only create, get all, and get by id for an order. The `Order` model should include
+an invoice (array of products and amounts), totalSalePrice, and timestamps
+// Need a function that will calculate price of sale
+* the create route will be used when a new sale is made
+* the get all route will be used to see all sales made (include only _id and createdAt)
+* the get by id route will be used to get details about an order (populate products)
+## Functionality
+* when creating an order calculate the totalSalePrice based on products and amounts
+* when creating an order update a bottles remaining liquid
+  * If there is not enough liquid in the bottle take liquid from multiple bottles
+  * If there is not enough liquid in all bottles send an error
+  * If a bottles remaining liquid is zero, delete the bottle
+* when creating an order send notification if totalRemainingLiquid is less than
+  half a bottle
+## Testing
+* `supertest` to test all your routes
+## Rubric
+* 0.5 point per route
+* 0.5 point per route test
+* 1 points for populate
+* 2 points for calculate totalSalePrice
+* 4 points for taking liquid from multiple bottles
+* 2 points for handling error when there is not enough liquid
+* 2 points from deleting empty bottles
+* 6 points for sending a notification if totalRemaining Liquid is less tha
+  half a bottle
