@@ -153,7 +153,7 @@ describe('order routes', () => {
       purchasePricePerBottle: 14.99,
       size: 750
     });
-    const bottle1 = await Bottle.create({
+    await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: 300
     });
@@ -188,11 +188,11 @@ describe('order routes', () => {
       purchasePricePerBottle: 14.99,
       size: 750
     });
-    const bottle1 = await Bottle.create({
+    await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: 100
     });
-    const bottle2 = await Bottle.create({
+    await Bottle.create({
       product: captainMorgan._id,
       remainingLiquid: captainMorgan.size
     });
