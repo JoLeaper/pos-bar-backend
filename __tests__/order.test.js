@@ -7,6 +7,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Product = require('../lib/models/Product');
 const Bottle = require('../lib/models/Bottle');
+const Order = require('../lib/models/Order');
 
 describe('order routes', () => {
   beforeAll(async() => {
